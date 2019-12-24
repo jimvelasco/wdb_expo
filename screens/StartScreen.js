@@ -110,6 +110,7 @@ const StartScreen = props => {
       let latlng = { latitude: el.lat, longitude: el.lon };
       obj["_id"] = el._id;
       obj["name"] = el.name;
+      obj["company"] = el.company;
       obj["address"] = el.address;
       obj["route"] = el.route;
       obj["status"] = el.status;

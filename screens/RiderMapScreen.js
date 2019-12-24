@@ -68,10 +68,10 @@ class RiderMapScreen extends Component {
     // this.state.socket.emit("room", busname);
 
     sock.on("broadcast_location", data => {
-      console.log(
-        "we got a BROADCAST_LOCATION RIDER response from socket",
-        data
-      );
+      // console.log(
+      //   "we got a BROADCAST_LOCATION RIDER response from socket",
+      //   data
+      // );
       //let obj = JSON.parse(data);
       this.processSocketData(data);
     });
@@ -84,13 +84,13 @@ class RiderMapScreen extends Component {
   }
 
   processSocketData(data) {
-    console.log(
-      "we got a processSocketData BROADCAST RIDER response from socket",
-      data
-    );
+    // console.log(
+    //   "we got a processSocketData BROADCAST RIDER response from socket",
+    //   data
+    // );
 
     let obj = JSON.parse(data);
-    console.log("object from psd", obj);
+    //console.log("object from psd", obj);
 
     let room = obj["room"];
     // console.log("room object from psd", room);
@@ -138,24 +138,24 @@ class RiderMapScreen extends Component {
       </Marker>
     );
 
-    let coord = {
-      longitude: -106.80153115088976,
-      latitude: 40.456937958199305
-    };
+    // let coord = {
+    //   longitude: -106.80153115088976,
+    //   latitude: 40.456937958199305
+    // };
 
-    let bmarker2 = (
-      <Marker
-        key={1000}
-        coordinate={coord}
-        //coordinate={userloc.coordinate}
-        title={"dummy title"}
-        description={"dummy desc"}
-      >
-        <View>
-          <Ionicons name="ios-bus" size={30} />
-        </View>
-      </Marker>
-    );
+    // let bmarker2 = (
+    //   <Marker
+    //     key={1000}
+    //     coordinate={coord}
+    //     //coordinate={userloc.coordinate}
+    //     title={"dummy title"}
+    //     description={"dummy desc"}
+    //   >
+    //     <View>
+    //       <Ionicons name="ios-bus" size={30} />
+    //     </View>
+    //   </Marker>
+    // );
 
     //let bmary = [];
     let bmary = this.state.busMarkers;
@@ -165,10 +165,10 @@ class RiderMapScreen extends Component {
       // console.log("the markers are", bmary);
       const mindex = bmary.findIndex(element => element.props.title === room);
       if (mindex > -1) {
-        console.log("we found a marker so we are replacing it");
+        // console.log("we found a marker so we are replacing it");
         bmary[mindex] = bmarker;
       } else {
-        console.log("we did not find a marker so we are pushing a new marker");
+        //console.log("we did not find a marker so we are pushing a new marker");
         bmary.push(bmarker);
       }
     }
@@ -189,7 +189,7 @@ class RiderMapScreen extends Component {
   }
 
   getLocationAsync = async () => {
-    // console.log("getting async locations");
+    console.log("getting async locations with accuracy highest best");
 
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== "granted") {
@@ -198,9 +198,17 @@ class RiderMapScreen extends Component {
     } else {
       console.log("we do have permission");
       //setHasLocationPermissions(true);
+      //BestForNavigation
+      //Highest
     }
 
-    let location = await Location.getCurrentPositionAsync({});
+    let location = await Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.Highest
+    });
+
+    // let location = await Location.getCurrentPositionAsync(
+    //   {}
+    //   );
     let userloc = {};
     userloc.id = location.timestamp;
     userloc.title = "User";

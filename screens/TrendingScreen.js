@@ -116,7 +116,7 @@ const TrendingScreen = props => {
   };
 
   const sendSocket = () => {
-    socket.emit("toapi", "well here you go");
+    socket.emit("toapi", { msg: "well here you go" });
   };
 
   const pressone = () => {

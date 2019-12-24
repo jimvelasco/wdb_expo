@@ -13,7 +13,7 @@ import Colors from "../constants/Colors";
 import XSButton from "../components/XSButton";
 import SButton from "../components/SButton";
 
-const BusSwitch = props => {
+const aBusSwitch = props => {
   return (
     <View style={styles.rowgroup}>
       {/* <Text style={styles.title}>{props.label}</Text> */}
@@ -24,6 +24,17 @@ const BusSwitch = props => {
         onValueChange={props.onChange}
       />
     </View>
+  );
+};
+
+const BusSwitch = props => {
+  return (
+    <Switch
+      trackColor={{ true: Colors.primaryColor }}
+      thumbColor={Platform.OS === "android" ? Colors.primaryColor : ""}
+      value={props.state}
+      onValueChange={props.onChange}
+    />
   );
 };
 
@@ -60,20 +71,30 @@ const BusItemRider = props => {
     <View style={hview}>
       <View style={styles.details}>
         <Text style={styles.title}>{props.bus.name}</Text>
-        <Text style={styles.text}>{props.bus.route}</Text>
+        <Text style={styles.text}>Route: {props.bus.route}</Text>
         {/* <Text style={styles.text}>Status: {props.bus.status}</Text> */}
-        <Text style={styles.text}>{props.bus.driver}</Text>
+        <Text style={styles.text}>Driver: {props.bus.driver}</Text>
       </View>
-      {touchable ? (
-        <View style={styles.rowgroup}>
-          <BusSwitch
-            label="select"
-            state={isSelected}
-            onChange={val => switchHit(val, props.bus)}
-          />
-          {/* <SButton title="track" onPress={props.onSelectBus} /> */}
+
+      <View style={styles.rowgroup}>
+        {touchable ? (
+          <View style={{ width: "50%" }}>
+            <BusSwitch
+              label="select"
+              state={isSelected}
+              onChange={val => switchHit(val, props.bus)}
+            />
+          </View>
+        ) : (
+          <View style={{ width: "50%" }}>
+            <Text style={styles.text}>Offline</Text>
+          </View>
+        )}
+        <View style={{ width: "50%" }}>
+          <Text style={styles.text}>{props.bus.company}</Text>
+          <Text style={styles.text}>{props.bus.address}</Text>
         </View>
-      ) : null}
+      </View>
     </View>
   );
 };
@@ -101,7 +122,8 @@ const styles = StyleSheet.create({
   },
   rowgroup: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    //justifyContent: "space-between",
+    justifyContent: "space-evenly",
     paddingHorizontal: 20
   },
 

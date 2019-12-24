@@ -218,7 +218,8 @@ class DriverMapScreen extends Component {
         let objstr = JSON.stringify(obj);
         // console.log("about to emit the timeout is", this.timeout);
         let room = this.state.bus.name; //"yampa";
-        this.state.socket.emit("toapi", room, objstr);
+        //this.state.socket.emit("toapi", room, objstr);
+        this.state.socket.emit("set_location", room, objstr);
       }
     );
   };
@@ -327,7 +328,7 @@ class DriverMapScreen extends Component {
           this.mapRef = ref;
         }}
       >
-        {/* {bmarker} */}
+        {bmarker}
       </MapView>
     );
 
